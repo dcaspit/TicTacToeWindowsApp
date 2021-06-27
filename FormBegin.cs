@@ -120,7 +120,7 @@ namespace Ex05
             m_ButtonStart.Click += new EventHandler(m_ButtonStart_Click);
             this.Controls.Add(m_ButtonStart);
 
-            this.Text = "Game Settings";
+            this.Text = "Game Settings:";
             this.ClientSize = new Size(m_ButtonStart.Right + 16, m_ButtonStart.Bottom + 16);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.ShowInTaskbar = false;
@@ -133,8 +133,11 @@ namespace Ex05
             if (Authenticator.CheckUserCredentials((int)m_NumericUpDownRows.Value, (int)m_NumericUpDownCols.Value))
             {
                 this.Close();
+                int AmountOfPlayers = m_CheckBoxPlayer2.Checked ? 2 : 1;
                 GameForm gameForm =
-                    new GameForm((int)m_NumericUpDownRows.Value, (int)m_NumericUpDownCols.Value, m_TextBoxPlayer1.Text, m_TextBoxPlayer2.Text);
+                    new GameForm(AmountOfPlayers,
+                                (int)m_NumericUpDownRows.Value, (int)m_NumericUpDownCols.Value,
+                                m_TextBoxPlayer1.Text, m_TextBoxPlayer2.Text);
                 gameForm.ShowDialog();
 
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -6,13 +7,29 @@ namespace Ex05
 {
     public class GameForm : Form
     {
-        //List<Button> m_ListButtons = new List<Button>();
+        List<SmartButton> m_ListButtons = new List<SmartButton>();
         Label m_LabelPlayer1;
         Label m_LabelPlayer2;
+        Game  m_Game;
 
-        public GameForm(int i_Rows, int i_Cols, string i_Player1, string i_Player2)
+
+        public GameForm(int i_AmountOfPlayers, int i_Rows, int i_Cols, string i_Player1, string i_Player2)
         {
             initializeComponents(i_Rows, i_Cols, i_Player1, i_Player2);
+            m_Game = new Game(i_AmountOfPlayers, i_Rows, i_Player1, i_Player2);
+            m_Game.BoardChanged += M_Game_BoardChanged;
+        }
+
+        private void M_Game_BoardChanged(char t, int row, int col)
+        {
+            foreach(SmartButton button in m_ListButtons)
+            {
+               if(button.Row == row && button.Col == col)
+                {
+                    button.Text = "" + t;
+                    //button.Enabled = false;
+                }
+            }
         }
 
         private void initializeComponents(int i_Rows, int i_Cols, string i_Player1, string i_Player2)
@@ -43,6 +60,7 @@ namespace Ex05
                     }
                     button.Click += new EventHandler(m_ButtonSmart_Click);
                     this.Controls.Add(button);
+                    m_ListButtons.Add(button);
                 }
                 overAllHeigth += 88;
             }
@@ -73,17 +91,23 @@ namespace Ex05
             this.ShowInTaskbar = false;
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
 
-
-
-
         }
 
         private void m_ButtonSmart_Click(object sender, EventArgs e)
         {
             int row = (sender as SmartButton).Row;
             int col = (sender as SmartButton).Col;
-            (sender as SmartButton).Text = "(" + row + " , " + col + ")";
+            //(sender as SmartButton).Text = "(" + row + " , " + col + ")";
             //MessageBox.Show("Row: " + row + " Col: " + col, "Button's Credentials:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            int[] d = { row, col };
+            try
+            {
+                m_Game.PlayRound(d);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Game Message:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
