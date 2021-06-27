@@ -87,36 +87,6 @@ namespace Ex05
             }
         }
 
-        public void PrintBoard()
-        {
-            for (int i = 1; i <= m_LengthOfBoard; i++)
-            {
-                Console.Write("  " + i + "  ");
-            }
-            Console.WriteLine("");
-
-            for (int k = 1; k <= m_LengthOfBoard; k++)
-            {
-                Console.Write("-----");
-            }
-            Console.WriteLine("");
-
-            for (int i = 1; i <= m_LengthOfBoard; i++)
-            {
-                Console.Write(i);
-                for (int j = 1; j <= m_LengthOfBoard; j++)
-                {
-                    Console.Write("| " + this[i - 1, j - 1] + " |");
-                }
-                Console.WriteLine("");
-                for (int k = 1; k <= m_LengthOfBoard; k++)
-                {
-                    Console.Write("-----");
-                }
-                Console.WriteLine("");
-            }
-        }
-
         public bool FullBoard()
         {
             return m_EmptyCells.Count == 0;

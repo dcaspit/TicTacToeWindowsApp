@@ -12,24 +12,11 @@ namespace Ex05
         Label m_LabelPlayer2;
         Game  m_Game;
 
-
         public GameForm(int i_AmountOfPlayers, int i_Rows, int i_Cols, string i_Player1, string i_Player2)
         {
-            initializeComponents(i_Rows, i_Cols, i_Player1, i_Player2);
             m_Game = new Game(i_AmountOfPlayers, i_Rows, i_Player1, i_Player2);
             m_Game.BoardChanged += M_Game_BoardChanged;
-        }
-
-        private void M_Game_BoardChanged(char t, int row, int col)
-        {
-            foreach(SmartButton button in m_ListButtons)
-            {
-               if(button.Row == row && button.Col == col)
-                {
-                    button.Text = "" + t;
-                    //button.Enabled = false;
-                }
-            }
+            initializeComponents(i_Rows, i_Cols, i_Player1, i_Player2);
         }
 
         private void initializeComponents(int i_Rows, int i_Cols, string i_Player1, string i_Player2)
@@ -58,6 +45,9 @@ namespace Ex05
                     {
                         button.Left = 16 + (j * 88);
                     }
+                    button.BackColor = Color.LightBlue;
+                    button.Padding = new Padding(6);
+                    button.Font = new Font("French Script MT", 18);
                     button.Click += new EventHandler(m_ButtonSmart_Click);
                     this.Controls.Add(button);
                     m_ListButtons.Add(button);
@@ -65,27 +55,23 @@ namespace Ex05
                 overAllHeigth += 88;
             }
 
-
-
             m_LabelPlayer1 = new Label();
-            m_LabelPlayer1.Text = i_Player1 + ":";
+            m_LabelPlayer1.Text = $@"{i_Player1} : {m_Game.Players[0].Wins}";
             m_LabelPlayer1.AutoSize = true;
-            m_LabelPlayer1.BackColor = Color.Yellow;
             m_LabelPlayer1.Top = overAllHeigth + 8;
             m_LabelPlayer1.Left = ((overAllHeigth + 8) / 2) - (m_LabelPlayer1.Width / 2);
 
             this.Controls.Add(m_LabelPlayer1);
 
             m_LabelPlayer2 = new Label();
-            m_LabelPlayer2.Text = i_Player2 + ":";
+            m_LabelPlayer2.Text = $@"{i_Player2} : {m_Game.Players[1].Wins}";
             m_LabelPlayer2.AutoSize = true;
-            m_LabelPlayer2.BackColor = Color.Yellow;
             m_LabelPlayer2.Top = overAllHeigth + 8;
             m_LabelPlayer2.Left = m_LabelPlayer1.Right + 16;
 
             this.Controls.Add(m_LabelPlayer2);
 
-            this.Text = "TicTacToeMisere";
+            this.Text = "TicTacToe";
             this.ClientSize = new Size(overAllHeigth + 8, m_LabelPlayer1.Bottom + 16);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.ShowInTaskbar = false;
@@ -97,17 +83,55 @@ namespace Ex05
         {
             int row = (sender as SmartButton).Row;
             int col = (sender as SmartButton).Col;
-            //(sender as SmartButton).Text = "(" + row + " , " + col + ")";
-            //MessageBox.Show("Row: " + row + " Col: " + col, "Button's Credentials:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             int[] d = { row, col };
             try
             {
                 m_Game.PlayRound(d);
+                if(m_Game.Players[1].Name == "[Computer]")
+                {
+                    int randomValue = m_Game.Board.GetEmptyRandomCell();
+                    d[0] = (randomValue / m_Game.Board.Length);
+                    d[1] = (randomValue % m_Game.Board.Length);
+                    m_Game.PlayRound(d);
+                }
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, "Game Message:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult result = MessageBox.Show($"{ex.Message} {Environment.NewLine} Would you like to play another round ?", "Game Message:", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(result == DialogResult.Yes)
+                {
+                    EndGameSequence();
+                }
+                else
+                {
+                    DialogResult res = MessageBox.Show("Thank you for playing :)", "GoodBye Message:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if(res == DialogResult.OK)
+                    {
+                        this.Close();
+                    }
+                }
+
             }
         }
+
+        private void EndGameSequence()
+        {
+            m_LabelPlayer2.Text = $@"{m_Game.Players[1].Name} : {m_Game.Players[1].Wins}";
+            m_LabelPlayer1.Text = $@"{m_Game.Players[0].Name} : {m_Game.Players[0].Wins}";
+            m_Game.Board.InitBoard();
+            foreach(SmartButton button in m_ListButtons)
+            {
+                button.Text = "";
+            }
+        }
+
+        private void M_Game_BoardChanged(char t, int row, int col)
+        {
+            int index = ((row) * m_Game.Board.Length) + (col);
+
+            m_ListButtons[index].Text = "" + t;
+        }
+
     }
 }

@@ -6,6 +6,9 @@ namespace Ex05
 {
     public class FormBegin : Form
     {
+        private const int k_Min = 3;
+        private const int k_Max = 9;
+
         Label m_LabelPlayers;
         Label m_LabelPlayer1;
         Label m_LabelPlayer2;
@@ -47,7 +50,6 @@ namespace Ex05
 
             m_TextBoxPlayer1 = new TextBox();
             m_TextBoxPlayer1.Left = m_LabelPlayer1.Right + 36;
-            //Aligning the TextBox vertically to the Player1: label.  
             m_TextBoxPlayer1.Top = m_LabelPlayer1.Top + m_LabelPlayer1.Height / 2 - m_TextBoxPlayer1.Height / 2;
             this.Controls.Add(m_TextBoxPlayer1);
 
@@ -87,8 +89,8 @@ namespace Ex05
             this.Controls.Add(m_LabelRows);
 
             m_NumericUpDownRows = new NumericUpDown();
-            m_NumericUpDownRows.Minimum = 4;
-            m_NumericUpDownRows.Maximum = 10;
+            m_NumericUpDownRows.Minimum = k_Min;
+            m_NumericUpDownRows.Maximum = k_Max;
             m_NumericUpDownRows.Top = m_LabelRows.Top + m_LabelRows.Height / 2 - m_NumericUpDownRows.Height / 2;
             m_NumericUpDownRows.Left = m_LabelRows.Right + 4;
             m_NumericUpDownRows.Width = 40;
@@ -102,8 +104,8 @@ namespace Ex05
             this.Controls.Add(m_LabelCols);
 
             m_NumericUpDownCols = new NumericUpDown();
-            m_NumericUpDownCols.Minimum = 4;
-            m_NumericUpDownCols.Maximum = 10;
+            m_NumericUpDownCols.Minimum = k_Min;
+            m_NumericUpDownCols.Maximum = k_Max;
             m_NumericUpDownCols.Width = 40;
             m_NumericUpDownCols.Top = m_LabelCols.Top + m_LabelCols.Height / 2 - m_NumericUpDownCols.Height / 2;
             m_NumericUpDownCols.Left = m_TextBoxPlayer1.Right - m_NumericUpDownCols.Width;
@@ -143,7 +145,7 @@ namespace Ex05
             }
             else
             {
-                MessageBox.Show("Dude.... Rows & Cols must be the same", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Dude.... Rows & Cols must be the same", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -156,11 +158,9 @@ namespace Ex05
 
         private void m_NumericUpDown_Click(object sender, EventArgs e)
         {
-            m_NumericUpDownCols.Value = (sender as NumericUpDown).Value;
-            m_NumericUpDownRows.Value = (sender as NumericUpDown).Value;
+            m_NumericUpDownCols.Value = m_NumericUpDownRows.Value = (sender as NumericUpDown).Value;
         }
 
     }
-
 
 }

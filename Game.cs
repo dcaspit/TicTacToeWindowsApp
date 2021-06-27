@@ -9,12 +9,9 @@ namespace Ex05
     public delegate void Action<T1, T2, T3>(T1 t1, T2 t2, T3 t3);
     class Game
     {
-        static readonly char sr_ContinueKeySmall = 'c';
-        static readonly char sr_ContinueKeyCapital = 'C';
-
         public event Action<char, int, int> BoardChanged;
+        public event Action<string> d;
 
-        private int m_AmountOfPlayers;
         private LogicBoard m_Board;
         private Player[] m_ArrayOfPlayers = new Player[2];
         private int m_PlayerIndex = 0; //Starting with player 1.
@@ -22,7 +19,6 @@ namespace Ex05
         /// <summary>
         /// Parmert CTOR
         /// </summary>
-        /// <param name="i_AmountOfPlayers">Players Amount</param>
         /// <param name="i_BoardSize">Board's Size</param>
         /// <param name="i_FirstPlayerName">First Player name</param>
         /// <param name="i_SecondPlayerName"></param>
@@ -32,7 +28,6 @@ namespace Ex05
             m_Board = new LogicBoard(i_BoardSize);
             m_ArrayOfPlayers[0] = new Player(0, i_FirstPlayerName);
             m_ArrayOfPlayers[1] = new Player(1, i_SecondPlayerName);
-            m_AmountOfPlayers = i_AmountOfPlayers;
         }
 
         public int PlayerIndex
@@ -66,14 +61,6 @@ namespace Ex05
             {
                 return m_ArrayOfPlayers[Index];
             }
-        }
-
-        public void InitParams(int i_AmountOfPlayers, int i_BoardSize,
-                        string i_FirstPlayerName, string i_SecondPlayerName)
-        {
-            m_Board = new LogicBoard(i_BoardSize);
-            m_ArrayOfPlayers[0] = new Player(0, i_FirstPlayerName);
-            m_ArrayOfPlayers[1] = new Player(1, i_SecondPlayerName);
         }
 
         public bool PlayRound(int[] i_MatrixIndex)
@@ -182,42 +169,6 @@ namespace Ex05
 
             return (sequenceCounterRows == i_Sequence || sequenceCounterCols == i_Sequence);
         }
-
-        //public void StartGame()
-        //{
-        //    int playerTurn = 0; //Starting with the first player
-        //    char key = sr_ContinueKeySmall; // continue play 
-
-        //    UI.WelcomeGame();
-        //    UI.PrintBoard(Board);
-
-        //    bool lose = this.PlayRound(playerTurn);
-
-        //    while (key == sr_ContinueKeySmall || key == sr_ContinueKeyCapital)
-        //    {
-        //        while (!this.Board.FullBoard() && !lose)
-        //        {
-        //            playerTurn = (playerTurn + 1) % 2;
-        //            lose = this.PlayRound(playerTurn);
-        //        }
-
-        //        if (this.Board.FullBoard() && !lose)
-        //        {
-        //            UI.PrintTie();
-        //        }
-
-        //        UI.PrintResults(m_ArrayOfPlayers, m_ArrayOfPlayers.Length);
-        //        key = UI.ContinueGame();
-
-        //        if (key == sr_ContinueKeySmall || key == sr_ContinueKeyCapital)
-        //        {
-        //            this.Board.InitBoard();
-        //            this.Board.InitEmptyCells();
-        //            lose = false;
-        //            Console.Clear();
-        //        }
-        //    }
-        //}
-
+    
     }
 }
