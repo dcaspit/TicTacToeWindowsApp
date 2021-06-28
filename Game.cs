@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex05
+namespace Ex05_TicTacToe_Logic
 {
     public delegate void Action<T1, T2, T3>(T1 t1, T2 t2, T3 t3);
-    class Game
+    public class Game
     {
         public event Action<char, int, int> BoardChanged;
         public event Action<string> d;
@@ -55,6 +55,7 @@ namespace Ex05
                 return m_ArrayOfPlayers;
             }
         }
+
         public Player this[int Index]
         {
             get
@@ -74,20 +75,21 @@ namespace Ex05
             Board[i_MatrixIndex[0], i_MatrixIndex[1]] = currSign; // enter here the removeal from emptycells
             BoardChanged.Invoke(currSign, i_MatrixIndex[0], i_MatrixIndex[1]);
 
-            if(Board.FullBoard())
-            {
-                throw new Exception("This is a Tie!");
-            }
-
             if (LoseMove(PlayerIndex, i_MatrixIndex[0], i_MatrixIndex[1]))
             {
                 this[(PlayerIndex + 1) % 2].Wins++;
                 throw new Exception(this[(PlayerIndex + 1) % 2].Name + " Wins!");
             }
+           if (Board.FullBoard())
+            {
+                throw new Exception("This is a Tie!");
+            }
             else
             {
                 returnBool = false;
             }
+
+
 
             if(m_PlayerIndex == 0)
             {

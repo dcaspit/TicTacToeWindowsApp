@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace Ex05
+namespace Ex05_TicTacToe_UI
 {
     public class FormBegin : Form
     {
@@ -145,7 +145,7 @@ namespace Ex05
             }
             else
             {
-                MessageBox.Show("Dude.... Rows & Cols must be the same", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Rows & Cols must be the same", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }

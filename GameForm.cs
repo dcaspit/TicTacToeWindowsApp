@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using Ex05_TicTacToe_Logic;
 
-namespace Ex05
+namespace Ex05_TicTacToe_UI
 {
     public class GameForm : Form
     {
@@ -120,17 +121,20 @@ namespace Ex05
             m_LabelPlayer2.Text = $@"{m_Game.Players[1].Name} : {m_Game.Players[1].Wins}";
             m_LabelPlayer1.Text = $@"{m_Game.Players[0].Name} : {m_Game.Players[0].Wins}";
             m_Game.Board.InitBoard();
+            m_Game.Board.InitEmptyCells();
             foreach(SmartButton button in m_ListButtons)
             {
                 button.Text = "";
+                button.Enabled = true;
             }
         }
 
-        private void M_Game_BoardChanged(char t, int row, int col)
+        private void M_Game_BoardChanged(char i_Char, int i_Row, int i_Col)
         {
-            int index = ((row) * m_Game.Board.Length) + (col);
+            int index = ((i_Row) * m_Game.Board.Length) + (i_Col);
 
-            m_ListButtons[index].Text = "" + t;
+            m_ListButtons[index].Text = "" + i_Char;
+            m_ListButtons[index].Enabled = false;
         }
 
     }
