@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex05
+namespace Ex05_TicTacToe_Logic
 {
-    class Player
+    public class Player
     {
         private int m_WinCounter = 0;
         private char m_Sign;

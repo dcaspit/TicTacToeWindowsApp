@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 
 
-namespace Ex05
+namespace Ex05_TicTacToe_UI
 {
     public class SmartButton : Button
     {

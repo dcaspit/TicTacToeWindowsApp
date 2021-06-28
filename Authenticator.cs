@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex05
+namespace Ex05_TicTacToe_UI
 {
 
     public class Authenticator

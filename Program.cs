@@ -2,8 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 
-
-namespace Ex05
+namespace Ex05_TicTacToe_UI
 {
     class Program
     {

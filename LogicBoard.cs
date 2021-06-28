@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex05
+namespace Ex05_TicTacToe_Logic
 {
-    class LogicBoard
+    public class LogicBoard
     {
         private int? m_LengthOfBoard;
         private char[,] m_GameBoard;
@@ -55,6 +55,8 @@ namespace Ex05
 
         public void InitEmptyCells()
         {
+            if(m_EmptyCells.Count() != 0 )
+                m_EmptyCells.Clear();
             if (m_LengthOfBoard != null)
             {
                 for (int i = 0; i < (m_LengthOfBoard * m_LengthOfBoard); i++)
@@ -84,36 +86,6 @@ namespace Ex05
                 {
                     this[i, j] = ' ';
                 }
-            }
-        }
-
-        public void PrintBoard()
-        {
-            for (int i = 1; i <= m_LengthOfBoard; i++)
-            {
-                Console.Write("  " + i + "  ");
-            }
-            Console.WriteLine("");
-
-            for (int k = 1; k <= m_LengthOfBoard; k++)
-            {
-                Console.Write("-----");
-            }
-            Console.WriteLine("");
-
-            for (int i = 1; i <= m_LengthOfBoard; i++)
-            {
-                Console.Write(i);
-                for (int j = 1; j <= m_LengthOfBoard; j++)
-                {
-                    Console.Write("| " + this[i - 1, j - 1] + " |");
-                }
-                Console.WriteLine("");
-                for (int k = 1; k <= m_LengthOfBoard; k++)
-                {
-                    Console.Write("-----");
-                }
-                Console.WriteLine("");
             }
         }
 
